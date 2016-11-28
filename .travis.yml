@@ -1,8 +1,6 @@
 os: osx
 osx_image: xcode8.2
-language: node_js
-node_js:
-  - "4.2"
+language: objective-c
 sudo: false
 addons:
   apt:
@@ -12,6 +10,7 @@ install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 before_script:
+  - brew install node
   - npm install -g gulp
   - npm install
 script: npm test
