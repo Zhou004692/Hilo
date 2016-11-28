@@ -42,6 +42,7 @@ describe('view:' + stageRenderType, function() {
         });
 
         it('new', function(done){
+            stage.tick(0);
             utils.diffWithScreenshot('Bitmap-new', done);
         });
 
@@ -54,9 +55,11 @@ describe('view:' + stageRenderType, function() {
             bmp.scaleY = -2;
             bmp.rotation = 30;
             if(stageRenderType === 'dom'){
+                stage.tick(0);
                 utils.diffWithScreenshot('Bitmap-transform-dom', done);
             }
             else{
+                stage.tick(0);
                 utils.diffWithScreenshot('Bitmap-transform', done);
             }
         });
@@ -65,12 +68,14 @@ describe('view:' + stageRenderType, function() {
             bmp.x = stage.width * .5;
             bmp.y = stage.height * .5;
             bmp.alpha = 0.5;
+            stage.tick(0);
             utils.diffWithScreenshot('Bitmap-alpha', done);
         });
 
         it('setImage', function(done){
             utils.loadImage('images/fish.png', function(img){
                 bmp.setImage(img, [0, 0, 174, 126]);
+                stage.tick(0);
                 utils.diffWithScreenshot('Bitmap-setImage', done);
             });
         });
@@ -101,21 +106,25 @@ describe('view:' + stageRenderType, function() {
 
         it('setText', function(done){
             text.setText('1234567');
+            stage.tick(0);
             utils.diffWithScreenshot('BitmapText-new', done);
         });
 
         it('textAlign center', function(done){
             text.setTextAlign('center');
+            stage.tick(0);
             utils.diffWithScreenshot('BitmapText-center', done);
         });
 
         it('textAlign left', function(done){
             text.setTextAlign('left');
+            stage.tick(0);
             utils.diffWithScreenshot('BitmapText-left', done);
         });
 
         it('textAlign right', function(done){
             text.setTextAlign('right');
+            stage.tick(0);
             utils.diffWithScreenshot('BitmapText-right', done);
         });
     });
@@ -137,18 +146,21 @@ describe('view:' + stageRenderType, function() {
         it('upState', function(done){
             button.fire('mouseout');
             button.state.should.equal(Hilo.Button.UP);
+            stage.tick(0);
             utils.diffWithScreenshot('Button-upState', done);
         });
 
         it('overState', function(done){
             button.fire('mouseover');
             button.state.should.equal(Hilo.Button.OVER);
+            stage.tick(0);
             utils.diffWithScreenshot('Button-overState', done);
         });
 
         it('downState', function(done){
             button.fire('mousedown');
             button.state.should.equal(Hilo.Button.DOWN);
+            stage.tick(0);
             utils.diffWithScreenshot('Button-downState', done);
         });
 
@@ -156,6 +168,7 @@ describe('view:' + stageRenderType, function() {
             button.setEnabled(false);
             button.state.should.equal(Hilo.Button.DISABLED);
             button.pointerEnabled.should.be.false();
+            stage.tick(0);
             utils.diffWithScreenshot('Button-disabledState', done);
         });
     });
@@ -289,6 +302,7 @@ describe('view:' + stageRenderType, function() {
                 y: 100
             }).addTo(stage);
 
+            stage.tick(0);
             utils.diffWithScreenshot('DOMElement-new', function(){
                 yellowRect.removeFromParent();
                 done();
@@ -350,32 +364,38 @@ describe('view:' + stageRenderType, function() {
 
         it('drawRect', function(done){
             graphics.lineStyle(1, "#009898").beginFill("#0ff").drawRect(0.5, 0.5, 99, 99).endFill();
+            stage.tick(0);
             utils.diffWithScreenshot('Graphics-drawRect', done);
         });
 
         it('drawRoundRect', function(done){
             graphics.lineStyle(10, "#009898").beginFill("#0ff").drawRoundRect(5, 5, 90, 90, 20).endFill();
+            stage.tick(0);
             utils.diffWithScreenshot('Graphics-drawRoundRect', done);
         });
 
         it('drawCircle & beginRadialGradientFill', function(done){
             graphics.lineStyle(2, "#009898").beginRadialGradientFill(50, 50, 0, 50, 50, 50, ["#fff", "#4ffcfc"], [0, 1]).drawCircle(2, 2, 48).endFill();
+            stage.tick(0);
             utils.diffWithScreenshot('Graphics-circle-beginRadialGradientFill', done);
         });
 
         it('drawEllipse', function(done){
             graphics.lineStyle(5, "#009898").beginFill("#0ff").drawEllipse(5, 5, 90, 50).endFill();
+            stage.tick(0);
             utils.diffWithScreenshot('Graphics-drawEllipse', done);
         });
 
         it('drawRect & beginLinearGradientFill', function(done){
             graphics.lineStyle(2, "#009898").beginLinearGradientFill(0, 0, 60, 0, ["#fff", "#4ffcfc"], [0.3, 1]).drawRect(2, 2, 66, 86).endFill();
+            stage.tick(0);
             utils.diffWithScreenshot('Graphics-drawRect-beginLinearGradientFill', done);
         });
 
         it('drawSVGPath', function(done){
             var svgPath = "M53 84 C53 84 51 84 51 84 C51 89 53 94 56 94 C64 94 71 89 71 84 C71 72 64 64 56 64 C42 64 31 72 31 84 C31 100 42 114 56 114 C75 114 91 100 91 84 C91 61 75 44 56 44 C31 44 11 61 11 84 C11 111 31 134 56 134 C86 134 111 111 111 84 C111 50 86 24 56 24";
             graphics.lineStyle(4, "#02d1d1").drawSVGPath(svgPath).closePath().endFill();
+            stage.tick(0);
             utils.diffWithScreenshot('Graphics-drawSVGPath', done);
         });
     });
@@ -407,11 +427,13 @@ describe('view:' + stageRenderType, function() {
 
         it('goto frame 1 should work', function(done){
             sprite.goto(1, true);
+            stage.tick(0);
             utils.diffWithScreenshot('Sprite-goto-frame1', done);
         });
 
         it('goto frame 7 should work', function(done){
             sprite.goto(7, true);
+            stage.tick(0);
             utils.diffWithScreenshot('Sprite-goto-frame7', done);
         });
     });
@@ -538,7 +560,8 @@ describe('view:' + stageRenderType, function() {
                 x: 40,
                 y: 50
             }).addTo(stage);
-            // utils.diffWithScreenshot('Text-new', done);
+            stage.tick(0);//
+            utils.diffWithScreenshot('Text-new', done);
         });
     });
 
