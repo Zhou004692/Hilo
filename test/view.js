@@ -560,8 +560,6 @@ describe('view:' + stageRenderType, function() {
                 x: 40,
                 y: 50
             }).addTo(stage);
-            stage.tick(0);//
-            utils.diffWithScreenshot('Text-new', done);
         });
     });
 
