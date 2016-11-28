@@ -25,29 +25,31 @@ var utils = {
      * */
     diffWithScreenshot:function(name, done, tolerantCfg){
         var that = this;
-        that.takeScreenshot(name, function(screenshotImg){
-            if(screenshotImg){
-                utils.loadImage('../expectScreenshot/' + name + '.png', function(specImg){
-                    if(specImg){
-                        var isSame = utils.diffImage(screenshotImg, specImg, tolerantCfg);
-                        if(isSame){
-                            done();
+        setTimeout(function(){
+            that.takeScreenshot(name, function(screenshotImg){
+                if(screenshotImg){
+                    utils.loadImage('../expectScreenshot/' + name + '.png', function(specImg){
+                        if(specImg){
+                            var isSame = utils.diffImage(screenshotImg, specImg, tolerantCfg);
+                            if(isSame){
+                                done();
+                            }
+                            else{
+                                done(new Error('diff image error:' + name));
+                            }
                         }
                         else{
-                            done(new Error('diff image error:' + name));
+                            done();
                         }
-                    }
-                    else{
+                    });
+                }
+                else{
+                    setTimeout(function(){
                         done();
-                    }
-                });
-            }
-            else{
-                setTimeout(function(){
-                    done();
-                }, 100);
-            }
-        });
+                    }, 100);
+                }
+            });
+        }, 100);
     },
     /**
      * 截屏
